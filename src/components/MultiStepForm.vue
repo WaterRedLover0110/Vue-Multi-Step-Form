@@ -1,39 +1,27 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="3">
-        <v-list>
-          <v-list-item
-            v-for="(label, index) in sections"
-            :key="index"
-            :class="{ active: index === step }"
-          >
-            <v-list-item-title>{{ label }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-col>
-      <v-col cols="9">
+	<v-container>
+		<v-row>
+			<v-col cols="3">
+				<v-list>
+					<v-list-item v-for="(label, index) in sections" :key="index" :class="{ active: index === step }">
+						<v-list-item-title>{{ label }}</v-list-item-title>
+					</v-list-item>
+				</v-list>
+			</v-col>
+			<v-col cols="9">
 				<FormStep :section="currentSection" />
-        <v-row justify="space-between" class="mt-4">
-          <v-btn @click="prevStep" :disabled="step === 0">Back</v-btn>
-          <v-btn
-            v-if="step < sections.length - 1"
-            color="primary"
-            @click="nextStep"
-          >
-            Next
-          </v-btn>
-          <v-btn
-            v-else
-            color="success"
-            @click="submitForm"
-          >
-            Submit
-          </v-btn>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+				<v-row justify="space-between" class="mt-4">
+					<v-btn @click="prevStep" :disabled="step === 0">Back</v-btn>
+					<v-btn v-if="step < sections.length - 1" color="primary" @click="nextStep">
+						Next
+					</v-btn>
+					<v-btn v-else color="success" @click="submitForm">
+						Submit
+					</v-btn>
+				</v-row>
+			</v-col>
+		</v-row>
+	</v-container>
 </template>
 
 <script>
@@ -41,23 +29,23 @@ import { mapState, mapGetters, mapActions } from 'vuex';
 import FormStep from './FormStep.vue';
 
 export default {
-  components: { FormStep },
-  computed: {
-    ...mapState(['step']),
-    ...mapGetters(['currentSection', 'currentFields']),
-    sections() {
-      return ['Personal Information', 'Job Details', 'Preferences', 'Security'];
-    },
-  },
-  methods: {
-    ...mapActions(['setStep']),
-    nextStep() {
-      this.setStep(this.step + 1);
-    },
-    prevStep() {
-      this.setStep(this.step - 1);
-    },
-    submitForm() {
+	components: { FormStep },
+	computed: {
+		...mapState(['step']),
+		...mapGetters(['currentSection', 'currentFields']),
+		sections() {
+			return ['Personal Information', 'Job Details', 'Preferences', 'Security'];
+		},
+	},
+	methods: {
+		...mapActions(['setStep']),
+		nextStep() {
+			this.setStep(this.step + 1);
+		},
+		prevStep() {
+			this.setStep(this.step - 1);
+		},
+		submitForm() {
 			// Function to remove circular references and filter unnecessary data
 			const cleanData = (obj, template, seen = new WeakSet()) => {
 				if (obj && typeof obj === 'object') {
@@ -115,13 +103,13 @@ export default {
 			console.log('Final Profile Data:', finalData);
 			alert('Form submitted! Check the console for data.');
 		},
-  },
+	},
 };
 </script>
 
 <style scoped>
 .active {
-  font-weight: bold;
-  color: #1976d2;
+	font-weight: bold;
+	color: #1976d2;
 }
 </style>
